@@ -1,0 +1,9 @@
+jsr 1
+int 8
+iag 9
+ias a
+rfi b
+iaq c
+hwn 10
+hwq 11
+hwi 12

@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FenetrePrincipale</class>
+ <widget class="QMainWindow" name="FenetrePrincipale">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>IDE Compact</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QMdiArea" name="mdiArea">
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFichiers">
+    <property name="title">
+     <string>Fichier</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionNouveau_projet"/>
+    <addaction name="actionNouveau_fichier"/>
+    <addaction name="separator"/>
+    <addaction name="actionOuvrir"/>
+    <addaction name="actionEnregistrer"/>
+    <addaction name="actionTout_enregistrer"/>
+    <addaction name="separator"/>
+    <addaction name="actionFermer_le_projet"/>
+    <addaction name="actionQuitter"/>
+   </widget>
+   <widget class="QMenu" name="menuEdition">
+    <property name="title">
+     <string>Edition</string>
+    </property>
+    <addaction name="actionAnnuler"/>
+    <addaction name="actionR_tablir"/>
+   </widget>
+   <widget class="QMenu" name="menuCompiler">
+    <property name="title">
+     <string>Compiler</string>
+    </property>
+    <addaction name="actionCompiler"/>
+    <addaction name="actionMettre_en_m_moire"/>
+    <addaction name="actionMettre_sur_disquette"/>
+   </widget>
+   <widget class="QMenu" name="menu_mulation">
+    <property name="title">
+     <string>Émulation</string>
+    </property>
+    <addaction name="action_xecuter"/>
+    <addaction name="actionStopper_l_mulation"/>
+    <addaction name="actionAfficher_cran"/>
+    <addaction name="actionAfficher_RAM"/>
+    <addaction name="actionAfficher_lecteur_de_disquettes"/>
+   </widget>
+   <widget class="QMenu" name="menuD_bug">
+    <property name="title">
+     <string>Débug</string>
+    </property>
+    <addaction name="actionBreak"/>
+    <addaction name="actionPas_par_pas"/>
+    <addaction name="actionPoser_un_point_de_contr_le"/>
+   </widget>
+   <widget class="QMenu" name="menuAffichage">
+    <property name="title">
+     <string>Affichage</string>
+    </property>
+    <addaction name="actionFichiers_dans_le_projet"/>
+    <addaction name="actionFichiers_ouverts"/>
+    <addaction name="actionR_sultats_de_compilation"/>
+    <addaction name="actionLabels"/>
+    <addaction name="actionAfficher_sous_forme_d_onglets"/>
+    <addaction name="actionAfficher_en_cascade"/>
+    <addaction name="actionAfficher_tout_en_m_me_temp"/>
+   </widget>
+   <addaction name="menuFichiers"/>
+   <addaction name="menuEdition"/>
+   <addaction name="menuCompiler"/>
+   <addaction name="menu_mulation"/>
+   <addaction name="menuD_bug"/>
+   <addaction name="menuAffichage"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>BottomToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="Arbre">
+   <property name="windowTitle">
+    <string>Fichiers dans le projet</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="QTreeView" name="treeView">
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="rootIsDecorated">
+        <bool>true</bool>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="Compilation">
+   <property name="windowTitle">
+    <string>Résultats de compilation</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="Labels">
+   <property name="windowTitle">
+    <string>Labels</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_4">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
+     <item>
+      <widget class="QListWidget" name="listWidget_2"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="DocOuvert">
+   <property name="windowTitle">
+    <string>Fichiers ouverts</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_5">
+    <layout class="QVBoxLayout" name="verticalLayout_6">
+     <item>
+      <widget class="QListWidget" name="listWidget"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionNouveau_projet">
+   <property name="text">
+    <string>Nouveau projet...</string>
+   </property>
+  </action>
+  <action name="actionNouveau_fichier">
+   <property name="text">
+    <string>Nouveau fichier...</string>
+   </property>
+  </action>
+  <action name="actionOuvrir">
+   <property name="text">
+    <string>Ouvrir...</string>
+   </property>
+  </action>
+  <action name="actionEnregistrer">
+   <property name="text">
+    <string>Enregistrer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionTout_enregistrer">
+   <property name="text">
+    <string>Tout enregistrer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionCompiler">
+   <property name="text">
+    <string>Compiler</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionEx_cuter">
+   <property name="text">
+    <string>Exécuter</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
+   </property>
+  </action>
+  <action name="actionMettre_en_m_moire">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mettre en mémoire</string>
+   </property>
+  </action>
+  <action name="actionMettre_sur_disquette">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Mettre sur disquette</string>
+   </property>
+  </action>
+  <action name="actionAnnuler">
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionR_tablir">
+   <property name="text">
+    <string>Rétablir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+Z</string>
+   </property>
+  </action>
+  <action name="actionAfficher_cran">
+   <property name="text">
+    <string>Afficher écran</string>
+   </property>
+  </action>
+  <action name="actionAfficher_RAM">
+   <property name="text">
+    <string>Afficher RAM</string>
+   </property>
+  </action>
+  <action name="actionAfficher_lecteur_de_disquettes">
+   <property name="text">
+    <string>Afficher lecteur de disquettes</string>
+   </property>
+  </action>
+  <action name="actionBreak">
+   <property name="text">
+    <string>Pause</string>
+   </property>
+   <property name="shortcut">
+    <string>F11</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionArr_ter">
+   <property name="text">
+    <string>Arrêter</string>
+   </property>
+  </action>
+  <action name="actionPas_par_pas">
+   <property name="text">
+    <string>Pas à pas</string>
+   </property>
+   <property name="shortcut">
+    <string>F10</string>
+   </property>
+  </action>
+  <action name="actionPoser_un_point_de_contr_le">
+   <property name="text">
+    <string>Poser un point de contrôle</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+  <action name="action_xecuter">
+   <property name="text">
+    <string>Exécuter</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+  </action>
+  <action name="actionStopper_l_mulation">
+   <property name="text">
+    <string>Stopper l'émulation</string>
+   </property>
+  </action>
+  <action name="actionFichiers_dans_le_projet">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fichiers dans le projet</string>
+   </property>
+  </action>
+  <action name="actionFichiers_ouverts">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fichiers ouverts</string>
+   </property>
+  </action>
+  <action name="actionR_sultats_de_compilation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Résultats de compilation</string>
+   </property>
+  </action>
+  <action name="actionLabels">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Labels</string>
+   </property>
+  </action>
+  <action name="actionAfficher_sous_forme_d_onglets">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Afficher sous forme d'onglets</string>
+   </property>
+  </action>
+  <action name="actionAfficher_en_cascade">
+   <property name="text">
+    <string>Afficher en cascade</string>
+   </property>
+  </action>
+  <action name="actionAfficher_tout_en_m_me_temp">
+   <property name="text">
+    <string>Afficher tout en même temp</string>
+   </property>
+  </action>
+  <action name="actionFermer_le_projet">
+   <property name="text">
+    <string>Fermer le projet</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>actionMettre_en_m_moire</sender>
+   <signal>triggered()</signal>
+   <receiver>actionMettre_sur_disquette</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionMettre_sur_disquette</sender>
+   <signal>triggered()</signal>
+   <receiver>actionMettre_en_m_moire</receiver>
+   <slot>toggle()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
