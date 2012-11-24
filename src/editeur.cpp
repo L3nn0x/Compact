@@ -87,8 +87,8 @@ void Editeur::reset()
     setPlainText(buffer);
 }
 
-void Editeur::setHigh(map &a, map &b, map &c)
+void Editeur::setHigh()
 {
-    high=new MyHighlight(document(),a,b,c);
+    high=new MyHighlight(document());
     high->rehighlight();
 }

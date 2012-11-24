@@ -6,7 +6,7 @@ Projet::Projet(QString rep,QString nom,QString fin,QStandardItem *item)
 
 QStandardItem* Projet::addFichier(Editeur* a,bool open)
 {
-    a->setHigh(compilo->_map_normal,compilo->_map_special,compilo->_map_regs);
+    a->setHigh();
     fichiers.push_back(a);
     QStandardItem *h=new QStandardItem(a->Get_nom());
     h->setFlags(h->flags()&~Qt::ItemIsEditable);

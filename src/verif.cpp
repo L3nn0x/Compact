@@ -1,13 +1,15 @@
 #include "verif.h"
 
-verif::verif(vector<string> &a,QMap<QString,QString> &e):_code(a),_map_conf(e)
+using namespace std;
+
+verif::verif(vector<string> &a,QMap<string,string> &e):_code(a),_map_conf(e)
 {}
 
 bool verif::verification()
 {
     for(vector<string>::iterator it=_code.begin();it!=_code.end();++it)
     {
-        if(map_normal.count(*it))
+        if(_map_normal.count(*it))
         {
             bool addr=false;
             bool add=false;
@@ -32,10 +34,10 @@ bool verif::verification()
             ++it;
             if(it==_code.end())
                 break;
-            if(!map_normal.count(*it)&&!map_special.count(*it)&&(*it).substr(0,1)!=":")
+            if(!_map_normal.count(*it)&&!_map_special.count(*it)&&(*it).substr(0,1)!=":")
                 return false;
             --it;
-        }else if(map_special.count(*it))
+        }else if(_map_special.count(*it))
         {
             bool addr=false;
             bool add=false;
@@ -60,7 +62,7 @@ bool verif::verification()
             ++it;
             if(it==_code.end())
                 break;
-            if(!map_normal.count(*it)&&!map_special.count(*it)&&(*it).substr(0,1)!=":")
+            if(!_map_normal.count(*it)&&!_map_special.count(*it)&&(*it).substr(0,1)!=":")
                 return false;
             --it;
         }else if((*it).substr(0,1)!=":")
@@ -74,7 +76,7 @@ vector<string> verif::correction()
     vector<string> a;
     for(vector<string>::iterator it=_code.begin();it!=_code.end();++it)
     {
-        if(map_normal.count(*it))
+        if(_map_normal.count(*it))
         {
             a.push_back(*it);
             bool addr=false;
@@ -101,7 +103,7 @@ vector<string> verif::correction()
                 else if(addr&&add&&(i==2)&&*it!="]")
                     a.push_back("]");
             }
-        }else if(map_special.count(*it))
+        }else if(_map_special.count(*it))
         {
             a.push_back(*it);
             bool addr=false;

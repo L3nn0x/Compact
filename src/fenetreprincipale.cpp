@@ -13,6 +13,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     ui->treeView->setModel(treeview);
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 
+    init_maps();
+
     signalmapper=new QSignalMapper();
 
     QObject::connect(ui->treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenu(QPoint)));

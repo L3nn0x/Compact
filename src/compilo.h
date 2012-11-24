@@ -6,15 +6,25 @@
 #include <fstream>
 #include <cctype>
 #include <sstream>
+#include <iostream>
 #include "verif.h"
+
+//mettre en minuscule
+struct my_tolower
+{
+    char operator()(char c) const
+    {
+        return std::tolower(static_cast<unsigned char>(c));
+    }
+};
 
 struct sentence{
 int nbmots; //nombre de mots en hexa
 bool islabel; //la ligne est un label
-QString before; //la ligne non coupee
-QVector<QString> coupe; //la ligne coupee
-QVector<int> hex; //la traduction hexa de la ligne
-QString label; //le label de la ligne
+std::string before; //la ligne non coupee
+std::vector<std::string> coupe; //la ligne coupee
+std::vector<int> hex; //la traduction hexa de la ligne
+std::string label; //le label de la ligne
 sentence *next; //la prochaine ligne
 };
 
@@ -25,17 +35,17 @@ typedef boost::tokenizer<boost::char_separator<char> > c_tok;
 class C
 {
     public:
-        C(QString="no file");
+        C(std::string="no file");
         ~C();
 
         //fonction principale. Verifie le programme puis le compile
-        void compilation(const QString&,const QString&);
+        void compilation(const std::string&,const std::string&);
 
         //cherche les labels
         void labels();
 
         //lecture du fichier
-        void lectureF(const QString&);
+        void lectureF(const std::string&);
         //coupe les phrases en mots
         void couper();
         //transforme les mots en code hexa
@@ -43,21 +53,21 @@ class C
         //recolle les codes hexa pour en faire un seul string
         void recoller();
         //ecrire dans un fichier le resultat
-        void ecrireF(const QString&);
+        void ecrireF(const std::string&);
 
-        QString _codeH;
-        QMap<QString,int> _map_labels;
+        std::string _codeH;
+        QMap<std::string,int> _map_labels;
 
     protected:
-        QMap<QString,QString> _map_conf;
+        QMap<std::string,std::string> _map_conf;
 
     private:
         struct sentence* _phrases;
 
         void opcode_normal(struct sentence*);
         void opcode_special(struct sentence*);
-        int adresse(QVector<QString>&,int*,bool second);
-        int nombre(QString &it);
+        int adresse(std::vector<std::string>&,int*,bool second);
+        int nombre(std::string &it);
         int getlabel(int);
 };
 #endif // COMPILO_H_INCLUDED

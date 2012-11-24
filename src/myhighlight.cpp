@@ -58,6 +58,8 @@ void MyHighlight::highlightBlock(const QString &text)
         while(pos<len)
         {
             QChar ch=tmp.at(pos);
+            QString ch2="0";
+            ch2[0]=ch;
             QString se=tmp.mid(pos,3);
             QString pop=tmp.mid(pos,4);
             QString ex=tmp.mid(pos,2);
@@ -75,25 +77,26 @@ void MyHighlight::highlightBlock(const QString &text)
                 start=pos;
                 while(pos<len&&tmp.at(pos)!=' '&&tmp.at(pos++)!='\t');
                 setFormat(start,pos-start,m_formats[Label]);
-            }else if(map_normal.count(se)||map_special.count(se))
+            }else if(_map_normal.contains((char*)se.constData())||
+                     _map_special.contains((char*)se.constData()))
             {
                 setFormat(pos,3,m_formats[Entity]);
                 pos+=3;
-            }else if(map_regs.count(ch)&&
+            }else if(_map_regs.count((char*)ch2.constData())&&
                      (pos!=0&&(tmp.at(pos-1)==' '||tmp.at(pos-1)=='\t'
                                ||tmp.at(pos-1)=='['||tmp.at(pos-1)==',')))
             {
                 setFormat(pos,1,m_formats[Reg]);
                 pos++;
-            }else if(map_regs.count(ex))
+            }else if(_map_regs.count((char*)ex.constData()))
             {
                 setFormat(pos,2,m_formats[Reg]);
                 pos+=2;
-            }else if(map_regs.count(se))
+            }else if(_map_regs.count((char*)se.constData()))
             {
                 setFormat(pos,3,m_formats[Reg]);
                 pos+=3;
-            }else if(map_regs.count(pop))
+            }else if(_map_regs.count((char*)pop.constData()))
             {
                 setFormat(pos,4,m_formats[Reg]);
                 pos+=4;

@@ -22,7 +22,7 @@ public:
     void sauvegarder();
     void reset();
 
-    void setHigh(map&,map&,map&);
+    void setHigh();
 
     ~Editeur();
     

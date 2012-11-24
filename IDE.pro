@@ -19,11 +19,11 @@ QMAKE_INFO_PLIST = ressources/Info.plist
 
 
 # Génération des options du compilateur
-COMPIL_VARS = -std=gnu++0x
+#COMPIL_VARS = -std=gnu++0x
 
-macx {
-COMPIL_VARS *= -stdlib=libc++
-}
+#macx {
+#COMPIL_VARS *= -stdlib=libc++
+#}
 
 QMAKE_CXXFLAGS *= $$COMPIL_VARS
 QMAKE_CFLAGS *= $$COMPIL_VARS
@@ -36,3 +36,6 @@ MOC_DIR = ./tmp/moc/            # Emplacement des fichiers .moc
 UI_DIR = ./tmp/ui/              # Emplacement des fichiers ui
 
 include(sources.pro)
+
+SOURCES += \
+    src/maps.cpp

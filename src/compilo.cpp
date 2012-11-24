@@ -1,5 +1,7 @@
 #include "compilo.h"
 
+using namespace std;
+
 C::~C()
 {
     while(_phrases!=0)
@@ -10,12 +12,13 @@ C::~C()
     }
 }
 
-C::C(QString a):_phrases(0)
+C::C(string a):_phrases(0)
 {
     if(a=="no file")
         return;
 
     ifstream file(a.c_str());
+    string tmp;
 
     while(getline(file,tmp))
     {
