@@ -166,3 +166,6 @@ pip-log.txt
 
 # Unix
 Makefile
+
+# Pour un projet de test
+test
