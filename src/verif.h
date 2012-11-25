@@ -1,15 +1,9 @@
 #ifndef VERIF_H_INCLUDED
 #define VERIF_H_INCLUDED
 
-#include <QMap>
 #include <vector>
-#include <string>
 
-static QMap<std::string,int> _map_normal;
-static QMap<std::string,int> _map_special;
-static QMap<std::string,int> _map_regs;
-
-void init_maps();
+#include "maps.h"
 
 //La classe de verification du programme
 class verif

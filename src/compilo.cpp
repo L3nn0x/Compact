@@ -34,7 +34,7 @@ void C::compilation(const string &a,const string &b)
 {
     lectureF(a); //on lit le fichier d'entree
     couper(); //on decoupe les phrases en mots
-    /*verif test(_coupe,_map_normal,_map_special,_map_regs,_map_conf); //on verifie la syntaxe
+    /*verif test(_coupe,maps::_map_normal,maps::_map_special,maps::_map_regs,_map_conf); //on verifie la syntaxe
     if(test.verification())
         cout<<"code OK";
     else
@@ -140,20 +140,20 @@ void C::labels()
         {
             tmp->islabel=false;
             tmp->nbmots++;
-            if(tmp->coupe[1]=="["&&(!_map_regs.count(tmp->coupe[2])||tmp->coupe[3]=="+"))
+            if(tmp->coupe[1]=="["&&(!maps::_map_regs.count(tmp->coupe[2])||tmp->coupe[3]=="+"))
                 tmp->nbmots++;
-            else if(!_map_regs.count(tmp->coupe[1])&&nombre(tmp->coupe[1])>30&&nombre(tmp->coupe[1])<0)
+            else if(!maps::_map_regs.count(tmp->coupe[1])&&nombre(tmp->coupe[1])>30&&nombre(tmp->coupe[1])<0)
                 tmp->nbmots++;
-            if(_map_normal.count(tmp->coupe[0]))
+            if(maps::_map_normal.count(tmp->coupe[0]))
             {
                 int b=2;
                 if(tmp->coupe[1]=="[")
                     b+=2;
                 if(tmp->coupe[1]=="["&&tmp->coupe[3]=="+")
                     b+=2;
-                if(tmp->coupe[b]=="["&&(!_map_regs.count(tmp->coupe[b+1])||tmp->coupe[b+2]=="+"))
+                if(tmp->coupe[b]=="["&&(!maps::_map_regs.count(tmp->coupe[b+1])||tmp->coupe[b+2]=="+"))
                     tmp->nbmots++;
-                else if(!_map_regs.count(tmp->coupe[b])&&(nombre(tmp->coupe[b])>30||nombre(tmp->coupe[b])<0))
+                else if(!maps::_map_regs.count(tmp->coupe[b])&&(nombre(tmp->coupe[b])>30||nombre(tmp->coupe[b])<0))
                     tmp->nbmots++;
             }
 
@@ -171,9 +171,9 @@ void C::compiler()
     {
         if(tmp->islabel)
             continue;
-        if(_map_normal.count(tmp->coupe[0]))
+        if(maps::_map_normal.count(tmp->coupe[0]))
             opcode_normal(tmp);
-        if(_map_special.count(tmp->coupe[0]))
+        if(maps::maps::_map_special.count(tmp->coupe[0]))
             opcode_special(tmp);
     }
 }
@@ -195,7 +195,7 @@ int C::getlabel(int a)
 
 void C::opcode_special(struct sentence* a)
 {
-    int tmp=_map_special[a->coupe[0]]<<5;
+    int tmp=maps::_map_special[a->coupe[0]]<<5;
     int tmp2=0;
     if(a->coupe[1]=="[")
     {
@@ -206,9 +206,9 @@ void C::opcode_special(struct sentence* a)
             a->hex.push_back(tmp2);
         }
         return;
-    }else if(_map_regs.count(a->coupe[1]))
+    }else if(maps::_map_regs.count(a->coupe[1]))
     {
-        tmp|=(_map_regs[a->coupe[1]])<<10; //c'est un registre
+        tmp|=(maps::_map_regs[a->coupe[1]])<<10; //c'est un registre
         a->hex.push_back(tmp);
         return;
     }
@@ -237,7 +237,7 @@ void C::opcode_special(struct sentence* a)
 }
 void C::opcode_normal(struct sentence* a)
 {
-    int tmp=_map_normal[a->coupe[0]];
+    int tmp=maps::_map_normal[a->coupe[0]];
     int j=0;
     bool second=false;
     bool third=false;
@@ -256,8 +256,8 @@ void C::opcode_normal(struct sentence* a)
             }
             j+=3;
             continue;
-        }else if(_map_regs.count(a->coupe[1+j]))
-            tmp|=(_map_regs[a->coupe[1+j]])<<(5+(!i?0:5)); //c'est un registre
+        }else if(maps::_map_regs.count(a->coupe[1+j]))
+            tmp|=(maps::_map_regs[a->coupe[1+j]])<<(5+(!i?0:5)); //c'est un registre
         else
         {
             if(_map_labels.count(a->coupe[1+j])) //c'est un label

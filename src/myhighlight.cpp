@@ -77,26 +77,26 @@ void MyHighlight::highlightBlock(const QString &text)
                 start=pos;
                 while(pos<len&&tmp.at(pos)!=' '&&tmp.at(pos++)!='\t');
                 setFormat(start,pos-start,m_formats[Label]);
-            }else if(_map_normal.contains((char*)se.constData())||
-                     _map_special.contains((char*)se.constData()))
+            }else if(maps::_map_normal.contains(se.toStdString())||
+                     maps::_map_special.contains(se.toStdString()))
             {
                 setFormat(pos,3,m_formats[Entity]);
                 pos+=3;
-            }else if(_map_regs.count((char*)ch2.constData())&&
+            }else if(maps::_map_regs.count(ch2.toStdString())&&
                      (pos!=0&&(tmp.at(pos-1)==' '||tmp.at(pos-1)=='\t'
                                ||tmp.at(pos-1)=='['||tmp.at(pos-1)==',')))
             {
                 setFormat(pos,1,m_formats[Reg]);
                 pos++;
-            }else if(_map_regs.count((char*)ex.constData()))
+            }else if(maps::_map_regs.count(ex.toStdString()))
             {
                 setFormat(pos,2,m_formats[Reg]);
                 pos+=2;
-            }else if(_map_regs.count((char*)se.constData()))
+            }else if(maps::_map_regs.count(se.toStdString()))
             {
                 setFormat(pos,3,m_formats[Reg]);
                 pos+=3;
-            }else if(_map_regs.count((char*)pop.constData()))
+            }else if(maps::_map_regs.count(pop.toStdString()))
             {
                 setFormat(pos,4,m_formats[Reg]);
                 pos+=4;

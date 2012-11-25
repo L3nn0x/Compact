@@ -28,9 +28,9 @@ void NouveauProjet::reject()
 void NouveauProjet::on_toolButton_clicked()
 {
     ui->Chemin->setText(QFileDialog::getExistingDirectory(this,
-                                                          "Choisissez un dossier","/home",
+                                                          tr("Choisissez un dossier"),"/home",
                                                           QFileDialog::ShowDirsOnly
-                                                          | QFileDialog::DontResolveSymlinks)+QString((__WIN32__?"/":"\\")));
+                                                          | QFileDialog::DontResolveSymlinks)+QDir::toNativeSeparators("/"));
 }
 
 QString NouveauProjet::Get_projet()const {return ui->projet_nom->text();}

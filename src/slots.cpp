@@ -126,7 +126,7 @@ void FenetrePrincipale::on_actionEnregistrer_triggered()
 
     if(b.count())
     {
-        int result=QMessageBox::question(this,"Fichier modifié",tr("Voulez vous sauvegarder \"%1\" ?").arg(a->Get_nom())
+        int result=QMessageBox::question(this,tr("Fichier modifié"),tr("Voulez vous sauvegarder \"%1\" ?").arg(a->Get_nom())
                                      ,QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
         if(result==QMessageBox::Yes)
             a->sauvegarder();
@@ -186,8 +186,8 @@ void FenetrePrincipale::Sauver_return(int b)
 void FenetrePrincipale::customContextMenu(QPoint a)
 {
     QMenu* menu=new QMenu();
-    menu->addAction(QString("Ajouter fichier(s)"),this,SLOT(AjouterFichier()));
-    signalmapper->setMapping(menu->addAction(QString("Fermer projet"),signalmapper,SLOT(map())),1);
+    menu->addAction(tr("Ajouter fichier(s)"),this,SLOT(AjouterFichier()));
+    signalmapper->setMapping(menu->addAction(tr("Fermer projet"),signalmapper,SLOT(map())),1);
     menu->exec(QCursor::pos());
 }
 
@@ -205,6 +205,6 @@ void FenetrePrincipale::Fermerprojet(int sender)
         tmp.clear();
         tmp=treeview->itemFromIndex(list[0])->text();
     }
-    QMessageBox::information(this,"Fermer le projet",tr("Projet en cours : %1\nProjet sélectionné : %2").arg(projetPrinc->Get_name())
+    QMessageBox::information(this,tr("Fermer le projet"),tr("Projet en cours : %1\nProjet sélectionné : %2").arg(projetPrinc->Get_name())
                              .arg(tmp));
 }

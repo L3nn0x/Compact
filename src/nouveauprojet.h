@@ -1,10 +1,6 @@
 #ifndef NOUVEAUPROJET_H
 #define NOUVEAUPROJET_H
 
-#ifndef __WIN32__
-#define __WIN32__ 0
-#endif
-
 #include <QDialog>
 #include <QString>
 #include <QFileDialog>

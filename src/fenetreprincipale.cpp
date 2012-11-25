@@ -13,8 +13,6 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     ui->treeView->setModel(treeview);
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    init_maps();
-
     signalmapper=new QSignalMapper();
 
     QObject::connect(ui->treeView,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(customContextMenu(QPoint)));
@@ -86,7 +84,7 @@ void FenetrePrincipale::NouveauF(bool a)
 
 void FenetrePrincipale::on_actionOuvrir_triggered()
 {
-    QString b=QFileDialog::getOpenFileName(this,"Projet à ouvrir","/home","Projet (*.proj)");
+    QString b=QFileDialog::getOpenFileName(this,tr("Projet à ouvrir"),"/home",tr("Projet (*.proj)"));
     QStandardItem *c=new QStandardItem();
     Projet* a=new Projet(b,c,this);
     if(!a->Get_ok())
@@ -111,7 +109,7 @@ void FenetrePrincipale::close_sub_win(Editeur* a)
         b=ui->listWidget->findItems(c,Qt::MatchExactly);
         if(b.count())
         {
-            int result=QMessageBox::question(this,"Fichier modifié",tr("Voulez vous sauvegarder \"%1\" ?").arg(a->Get_nom())
+            int result=QMessageBox::question(this,tr("Fichier modifié"),tr("Voulez vous sauvegarder \"%1\" ?").arg(a->Get_nom())
                                              ,QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
             if(result==QMessageBox::Yes)
                     a->sauvegarder();
