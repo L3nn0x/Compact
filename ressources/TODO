@@ -1,0 +1,2 @@
+Concernant les icones, il faut créer un icone.icns (pour mac) et un
+icone.ico (win) + décommenter dans le IDE.pro
