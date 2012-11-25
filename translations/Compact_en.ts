@@ -6,17 +6,17 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="14"/>
         <source>IDE Compact</source>
-        <translation type="unfinished"></translation>
+        <translation>IDE Compact</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="41"/>
         <source>Fichier</source>
-        <translation type="unfinished"></translation>
+        <translation>File</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="56"/>
         <source>Edition</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="63"/>
@@ -37,7 +37,7 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="89"/>
         <source>Affichage</source>
-        <translation type="unfinished"></translation>
+        <translation>View</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="117"/>
@@ -66,7 +66,7 @@
         <location filename="../src/fenetreprincipale.ui" line="188"/>
         <location filename="../src/fenetreprincipale.ui" line="369"/>
         <source>Fichiers ouverts</source>
-        <translation type="unfinished">Open files</translation>
+        <translation>Open files</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="203"/>
@@ -81,32 +81,32 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="213"/>
         <source>Ouvrir...</source>
-        <translation type="unfinished"></translation>
+        <translation>Open…</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="218"/>
         <source>Enregistrer</source>
-        <translation type="unfinished"></translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="221"/>
         <source>Ctrl+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+S</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="226"/>
         <source>Tout enregistrer</source>
-        <translation type="unfinished"></translation>
+        <translation>Save all</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="229"/>
         <source>Ctrl+Shift+S</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="237"/>
         <source>F5</source>
-        <translation type="unfinished"></translation>
+        <translation>F5</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="242"/>
@@ -118,7 +118,7 @@
         <location filename="../src/fenetreprincipale.ui" line="245"/>
         <location filename="../src/fenetreprincipale.ui" line="342"/>
         <source>F6</source>
-        <translation type="unfinished"></translation>
+        <translation>F6</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="250"/>
@@ -143,7 +143,7 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="277"/>
         <source>Ctrl+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Z</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="282"/>
@@ -153,17 +153,17 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="285"/>
         <source>Ctrl+Shift+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+Shift+Z</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="290"/>
         <source>Afficher écran</source>
-        <translation type="unfinished"></translation>
+        <translation>Show screen</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="295"/>
         <source>Afficher RAM</source>
-        <translation type="unfinished"></translation>
+        <translation>Show RAM</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="300"/>
@@ -178,17 +178,17 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="308"/>
         <source>F11</source>
-        <translation type="unfinished"></translation>
+        <translation>F11</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="313"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="318"/>
         <source>Arrêter</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="323"/>
@@ -198,7 +198,7 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="326"/>
         <source>F10</source>
-        <translation type="unfinished"></translation>
+        <translation>F10</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="331"/>
@@ -208,12 +208,12 @@
     <message>
         <location filename="../src/fenetreprincipale.ui" line="334"/>
         <source>F9</source>
-        <translation type="unfinished"></translation>
+        <translation>F9</translation>
     </message>
     <message utf8="true">
         <location filename="../src/fenetreprincipale.ui" line="347"/>
         <source>Stopper l&apos;émulation</source>
-        <translation type="unfinished"></translation>
+        <translation>Stop emulation</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.ui" line="399"/>
@@ -234,7 +234,7 @@
         <location filename="../src/fenetreprincipale.ui" line="414"/>
         <location filename="../src/slots.cpp" line="208"/>
         <source>Fermer le projet</source>
-        <translation type="unfinished"></translation>
+        <translation>Close project</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.cpp" line="87"/>
@@ -244,7 +244,7 @@
     <message>
         <location filename="../src/fenetreprincipale.cpp" line="87"/>
         <source>Projet (*.proj)</source>
-        <translation type="unfinished"></translation>
+        <translation>Project (*.proj)</translation>
     </message>
     <message>
         <location filename="../src/fenetreprincipale.cpp" line="112"/>
@@ -261,12 +261,12 @@
     <message>
         <location filename="../src/slots.cpp" line="189"/>
         <source>Ajouter fichier(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Add file(s)</translation>
     </message>
     <message>
         <location filename="../src/slots.cpp" line="190"/>
         <source>Fermer projet</source>
-        <translation type="unfinished"></translation>
+        <translation>Close project</translation>
     </message>
     <message>
         <location filename="../src/slots.cpp" line="208"/>
