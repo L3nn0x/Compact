@@ -73,4 +73,4 @@ SOURCES *= \
 	verif.cpp \
 	maps.cpp
 
-TRANSLATIONS = Compact_en.ts Compact_fr.ts qt_fr.ts
+TRANSLATIONS = translations/Compact_en.ts

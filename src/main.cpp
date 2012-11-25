@@ -4,18 +4,15 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication app(argc, argv);
 
     QString locale = QLocale::system().name().section('_', 0, 0);
-
     QTranslator translator;
-    QTranslator translator2;
     translator.load(QString("Compact_") + locale);
-    translator2.load(QString("qt_")+locale);
-    a.installTranslator(&translator2);
-    a.installTranslator(&translator);
-    FenetrePrincipale w;
-    w.show();
+    app.installTranslator(&translator);
+    
+    FenetrePrincipale fenetre;
+    fenetre.show();
 
-    return a.exec();
+    return app.exec();
 }
