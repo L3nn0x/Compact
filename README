@@ -1,0 +1,26 @@
+*********************************
+*
+* Compiler l'IDE sous GNU/Linux
+*
+*********************************
+
+1) Installer la lib Qt. Pour cela, deux moyens :
+
+	1° vous voulez juste compiler le projet sans le modifier :
+	installez le paquet libqt4-dev.
+	
+	2° vous voulez participer à l'amélioration du projet : vous
+	pouvez éditer les sources avec votre éditeur favori ou
+	installer le paquet qtcreator-doc
+
+2) Installez la lib boost, le nom du paquet est libboost-dev ou un
+autre nom similaire.
+
+3) Téléchargez les sources, par exemple avec
+'wget https://github.com/FaerieFrOSt/Compact/archive/master.zip'
+
+4) Déplacez vous dans le dossier contenant les sources et exécutez
+'qmake && make'
+
+5) Si tout se passe bien, le binaire du projet est dans le dossier
+bin/
