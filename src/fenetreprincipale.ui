@@ -51,13 +51,6 @@
     <addaction name="actionFermer_le_projet"/>
     <addaction name="actionQuitter"/>
    </widget>
-   <widget class="QMenu" name="menuEdition">
-    <property name="title">
-     <string>Edition</string>
-    </property>
-    <addaction name="actionAnnuler"/>
-    <addaction name="actionR_tablir"/>
-   </widget>
    <widget class="QMenu" name="menuCompiler">
     <property name="title">
      <string>Compiler</string>
@@ -97,7 +90,6 @@
     <addaction name="actionAfficher_tout_en_m_me_temp"/>
    </widget>
    <addaction name="menuFichiers"/>
-   <addaction name="menuEdition"/>
    <addaction name="menuCompiler"/>
    <addaction name="menu_mulation"/>
    <addaction name="menuD_bug"/>
@@ -282,7 +274,7 @@
     <string>Rétablir</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Shift+Z</string>
+    <string>Ctrl+Y</string>
    </property>
   </action>
   <action name="actionAfficher_cran">

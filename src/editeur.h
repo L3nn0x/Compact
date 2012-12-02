@@ -1,14 +1,14 @@
 #ifndef EDITEUR_H
 #define EDITEUR_H
 
-#include <QTextEdit>
+#include <QPlainTextEdit>
 #include <QFile>
 #include <QCloseEvent>
 #include <QTextStream>
 
 #include "myhighlight.h"
 
-class Editeur : public QTextEdit
+class Editeur : public QPlainTextEdit
 {
     Q_OBJECT
 public:

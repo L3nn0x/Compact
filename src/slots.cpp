@@ -72,9 +72,10 @@ void FenetrePrincipale::on_actionAfficher_tout_en_m_me_temp_triggered()
 
 void FenetrePrincipale::on_actionNouveau_fichier_triggered()
 {
-    if(projetPrinc==0)
-        return;
-    fichier=new NouveauFichier(this);
+    if(!projetPrinc)
+        fichier=new NouveauFichier(this,false);
+    else
+        fichier=new NouveauFichier(this);
     QObject::connect(fichier,SIGNAL(Get_ok(bool)),this,SLOT(NouveauF(bool)));
     fichier->show();
 }
@@ -89,6 +90,11 @@ void FenetrePrincipale::Modifyfont()
 
     ui->treeView->collapseAll();
     ui->treeView->expand(treeview->indexFromItem(projetPrinc->getprojet()));
+}
+
+void FenetrePrincipale::ChangerTitre(QMdiSubWindow *a)
+{
+    setWindowTitle(a?a->windowTitle()+" - Compact":"IDE Compact");
 }
 
 void FenetrePrincipale::toggle_asterix(QString a,bool b)
@@ -165,7 +171,7 @@ void FenetrePrincipale::Sauver_return(int b)
 {
     end=true;
     QCloseEvent *x=sauver->Get_signal();
-    delete sauver;
+    sauver->deleteLater();
     if((!b||b==-1)&&!x)
         return;
     else if(!b&&x)

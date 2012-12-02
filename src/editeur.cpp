@@ -1,7 +1,7 @@
 #include "editeur.h"
 
 Editeur::Editeur(QString name,void* proj,QWidget *parent) :
-    QTextEdit(parent),nom(name),modified(false),fichier(name),projet(proj)
+    QPlainTextEdit(parent),nom(name),modified(false),fichier(name),projet(proj)
 {
     setUndoRedoEnabled(true);
     int i=0;
@@ -40,7 +40,7 @@ Editeur::Editeur(QString name,void* proj,QWidget *parent) :
 }
 
 Editeur::Editeur(QString nom,QString dossier,void* proj,QWidget *parent) :
-    QTextEdit(parent),nom(nom),modified(false),projet(proj)
+    QPlainTextEdit(parent),nom(nom),modified(false),projet(proj)
 {
     setUndoRedoEnabled(true);
     fichier=dossier+nom;

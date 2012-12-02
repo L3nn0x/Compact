@@ -79,6 +79,8 @@ private slots:
 
     void AjouterFichier();
 
+    void ChangerTitre(QMdiSubWindow*);
+
 private:
     Ui::FenetrePrincipale *ui;
     NouveauProjet *projet;

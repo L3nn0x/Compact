@@ -25,6 +25,8 @@ FenetrePrincipale::FenetrePrincipale(QWidget *parent) :
     QObject::connect(ui->actionFermer_le_projet,SIGNAL(triggered()),signalmapper,SLOT(map()));
     QObject::connect(signalmapper,SIGNAL(mapped(int)),this,SLOT(Fermerprojet(int)));
     signalmapper->setMapping(ui->actionFermer_le_projet,0);
+
+    QObject::connect(ui->mdiArea,SIGNAL(subWindowActivated(QMdiSubWindow*)),this,SLOT(ChangerTitre(QMdiSubWindow*)));
 }
 
 void FenetrePrincipale::NouveauP(bool a)
@@ -66,8 +68,8 @@ FenetrePrincipale::~FenetrePrincipale()
 }
 
 void FenetrePrincipale::NouveauF(bool a)
-{
-    if(a)
+{ 
+    if(a&&projetPrinc)
     {
         Editeur *e=new Editeur(fichier->Get_fichier()+projetPrinc->Get_fin(),projetPrinc->Get_dossier(),projetPrinc);
         QMdiSubWindow *c=ui->mdiArea->addSubWindow(e,Qt::Tool);
@@ -78,13 +80,45 @@ void FenetrePrincipale::NouveauF(bool a)
         ui->listWidget->addItem(fichier->Get_fichier()+projetPrinc->Get_fin());
         projetPrinc->addFichier(e);
         Modifyfont();
+    }else if(a)
+    {
+        Editeur *e=new Editeur(fichier->Get_fichier()+fichier->Get_fin(),fichier->Get_dossier(),0);
+        QMdiSubWindow* c=ui->mdiArea->addSubWindow(e,Qt::Tool);
+        c->setWindowTitle(fichier->Get_fichier()+fichier->Get_fin());
+        c->setVisible(true);
+        QObject::connect(e,SIGNAL(Fermer(Editeur*)),this,SLOT(close_sub_win(Editeur*)));
+        QObject::connect(e,SIGNAL(Change(QString,bool)),this,SLOT(toggle_asterix(QString,bool)));
+        ui->listWidget->addItem(fichier->Get_fichier()+fichier->Get_fin());
     }
     delete fichier;
 }
 
 void FenetrePrincipale::on_actionOuvrir_triggered()
 {
-    QString b=QFileDialog::getOpenFileName(this,tr("Projet à ouvrir"),"/home",tr("Projet (*.proj)"));
+    QString b=QFileDialog::getOpenFileName(this,tr("Projet à ouvrir"),"/home",tr("Projet (*.proj);;Asm (*.dasm *.dcpu16)"));
+    if(b.endsWith(".dasm")||b.endsWith(".dcpu16"))
+    {
+        QString c=b;
+        int i=0;
+        for(QString::iterator it=c.end();it!=c.begin();--it)
+        {
+            i++;
+            if(*it=='/'||*it=='\\')
+            {
+                i-=2;
+                c.remove(0,c.length()-i);
+                break;
+            }
+        }
+        Editeur *e=new Editeur(b,0);
+        QMdiSubWindow* f=ui->mdiArea->addSubWindow(e,Qt::Tool);
+        f->setWindowTitle(c);
+        f->setVisible(true);
+        QObject::connect(e,SIGNAL(Fermer(Editeur*)),this,SLOT(close_sub_win(Editeur*)));
+        QObject::connect(e,SIGNAL(Change(QString,bool)),this,SLOT(toggle_asterix(QString,bool)));
+        ui->listWidget->addItem(c);
+        return;
+    }
     QStandardItem *c=new QStandardItem();
     Projet* a=new Projet(b,c,this);
     if(!a->Get_ok())
