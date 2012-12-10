@@ -21,6 +21,7 @@ struct my_tolower
 struct sentence{
 int nbmots; //nombre de mots en hexa
 bool islabel; //la ligne est un label
+bool dat; //la ligne est un dat
 std::string before; //la ligne non coupee
 std::vector<std::string> coupe; //la ligne coupee
 std::vector<int> hex; //la traduction hexa de la ligne
@@ -41,8 +42,13 @@ class C
         //fonction principale. Verifie le programme puis le compile
         void compilation(const std::string&,const std::string&);
 
+        std::string compilation(const std::string&);
+
         //cherche les labels
         void labels();
+
+        //deplace les labels pour une optimisation maximum
+        void deplaceLabels();
 
         //lecture du fichier
         void lectureF(const std::string&);

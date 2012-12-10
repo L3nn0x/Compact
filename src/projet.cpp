@@ -116,3 +116,11 @@ Editeur* Projet::getFichier(QStandardItem *a)
             return *it;
     return 0;
 }
+
+QString Projet::Compiler()
+{
+    QString tmp;
+    for(QList<Editeur*>::iterator it=fichiers.begin();it!=fichiers.end();++it)
+        tmp+=(*it)->toPlainText()+"\n";
+    return QString::fromStdString(compilo->compilation(tmp.toStdString()));
+}

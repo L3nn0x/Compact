@@ -8,8 +8,8 @@ Sauver::Sauver(QWidget *parent) :
     ui->setupUi(this);
 }
 
-Sauver::Sauver(QList<QListWidgetItem*> a,QCloseEvent *sig, QWidget *parent):QDialog(parent),ui(new Ui::Sauver),
-    signal(sig)
+Sauver::Sauver(QList<QListWidgetItem*> a,bool b, QWidget *parent):QDialog(parent),ui(new Ui::Sauver),
+    signal(b)
 {
     ui->setupUi(this);
     for(QList<QListWidgetItem*>::iterator it=a.begin();it!=a.end();++it)
@@ -32,7 +32,7 @@ void Sauver::on_buttonBox_clicked(QAbstractButton *a)
     if(b==QDialogButtonBox::SaveAll)
         emit ok(1);
     else if(b==QDialogButtonBox::Discard)
-        emit ok(-1);
-    else
         emit ok(0);
+    else
+        emit ok(-1);
 }

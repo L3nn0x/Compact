@@ -13,6 +13,7 @@
 #include <QStandardItemModel>
 #include <QSettings>
 #include <QSignalMapper>
+#include <QCloseEvent>
 
 #include "projet.h"
 #include "nouveauprojet.h"
@@ -68,6 +69,8 @@ private slots:
 
     void on_actionEnregistrer_triggered();
     void on_actionTout_enregistrer_triggered();
+
+    void on_actionCompiler_triggered();
 
     void Fermerprojet(int);
 

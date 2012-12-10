@@ -53,9 +53,6 @@ void MyHighlight::highlightBlock(const QString &text)
 
     switch(state)
     {
-    case LabelState:
-        state=NormalState;
-
     case NormalState:
     default:
         while(pos<len)
@@ -80,7 +77,6 @@ void MyHighlight::highlightBlock(const QString &text)
                 start=pos;
                 while(pos<len&&tmp.at(pos)!=' '&&tmp.at(pos++)!='\t');
                 setFormat(start,pos-start,m_formats[Label]);
-                state=LabelState;
             }else if(maps::_map_normal.contains(se.toStdString())||
                      maps::_map_special.contains(se.toStdString()))
             {
@@ -111,6 +107,10 @@ void MyHighlight::highlightBlock(const QString &text)
             }else if(ch>='0'&&ch<='9')
             {
                 setFormat(pos,1,m_formats[Number]);
+                pos++;
+            }else if(se=="dat")
+            {
+                setFormat(pos,3,m_formats[Entity]);
                 pos++;
             }else
             pos++;

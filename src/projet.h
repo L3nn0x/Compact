@@ -25,6 +25,8 @@ public:
     QString Get_dossier()const{return dossier;}
     QString Get_name()const{return name;}
 
+    QString Compiler();
+
 protected:
     QString dossier;
     QString name;

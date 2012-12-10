@@ -157,11 +157,14 @@ void FenetrePrincipale::on_actionTout_enregistrer_triggered()
 void FenetrePrincipale::closeEvent(QCloseEvent *b)
 {
     if(end)
+    {
         b->accept();
+        return;
+    }
     QList<QListWidgetItem*> a=ui->listWidget->findItems("*",Qt::MatchContains);
     if(!a.count())
         return;
-    sauver=new Sauver(a,b,this);
+    sauver=new Sauver(a,true,this);
     sauver->show();
     QObject::connect(sauver,SIGNAL(ok(int)),this,SLOT(Sauver_return(int)));
     b->ignore();
@@ -170,12 +173,15 @@ void FenetrePrincipale::closeEvent(QCloseEvent *b)
 void FenetrePrincipale::Sauver_return(int b)
 {
     end=true;
-    QCloseEvent *x=sauver->Get_signal();
-    sauver->deleteLater();
+    bool x=sauver->Get_signal();
+    sauver->close();
     if((!b||b==-1)&&!x)
         return;
     else if(!b&&x)
-        closeEvent(x);
+    {
+        this->close();
+        return;
+    }
     QList<QMdiSubWindow*> z=ui->mdiArea->subWindowList();
     for(QList<QMdiSubWindow*>::iterator it=z.begin();it!=z.end();++it)
     {
@@ -183,7 +189,10 @@ void FenetrePrincipale::Sauver_return(int b)
         ((Editeur*)(*it)->widget())->sauvegarder();
     }
     if(x)
-        closeEvent(x);
+    {
+        this->close();
+        return;
+    }
     QList<QListWidgetItem*> a=ui->listWidget->findItems("*",Qt::MatchContains);
     for(QList<QListWidgetItem*>::iterator it=a.begin();it!=a.end();++it)
         (*it)->setText((*it)->text().remove(QChar('*')));
@@ -213,4 +222,10 @@ void FenetrePrincipale::Fermerprojet(int sender)
     }
     QMessageBox::information(this,tr("Fermer le projet"),tr("Projet en cours : %1\nProjet sélectionné : %2").arg(projetPrinc->Get_name())
                              .arg(tmp));
+}
+
+void FenetrePrincipale::on_actionCompiler_triggered()
+{
+    if(projetPrinc)
+        QMessageBox::information(this,"compilation",projetPrinc->Compiler());
 }

@@ -89,6 +89,7 @@ void FenetrePrincipale::NouveauF(bool a)
         QObject::connect(e,SIGNAL(Fermer(Editeur*)),this,SLOT(close_sub_win(Editeur*)));
         QObject::connect(e,SIGNAL(Change(QString,bool)),this,SLOT(toggle_asterix(QString,bool)));
         ui->listWidget->addItem(fichier->Get_fichier()+fichier->Get_fin());
+        e->setHigh();
     }
     delete fichier;
 }
@@ -163,7 +164,7 @@ void FenetrePrincipale::close_sub_win(Editeur* a)
         }
     ui->mdiArea->removeSubWindow(a);
     if(tmp2)
-        delete tmp2;
+        tmp2->deleteLater();
 }
 
 void FenetrePrincipale::choose_sub_win(QListWidgetItem *a)

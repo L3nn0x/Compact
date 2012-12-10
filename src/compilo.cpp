@@ -32,6 +32,13 @@ C::C(string a):_phrases(0)
 
 void C::compilation(const string &a,const string &b)
 {
+    _codeH.clear();
+    while(_phrases!=0)
+    {
+        sentence *tmp=_phrases->next;
+        delete _phrases;
+        _phrases=tmp;
+    }
     lectureF(a); //on lit le fichier d'entree
     couper(); //on decoupe les phrases en mots
     /*verif test(_coupe,maps::_map_normal,maps::_map_special,maps::_map_regs,_map_conf); //on verifie la syntaxe
@@ -63,6 +70,7 @@ void C::lectureF(const string &a)
             _phrases->before=tmp;
             _phrases->next=0;
             _phrases->nbmots=0;
+            _phrases->dat=false;
         }else
         {
             sentence *tmp2=_phrases;
@@ -72,6 +80,7 @@ void C::lectureF(const string &a)
             a->before=tmp;
             a->next=0;
             a->nbmots=0;
+            a->dat=false;
             tmp2->next=a;
         }
     }
@@ -79,10 +88,11 @@ void C::lectureF(const string &a)
 
 void C::couper()
 {
+    sentence* ph2=_phrases;
     for(sentence* ph=_phrases; ph!=0;ph=ph->next)
     {
         size_t c=(ph->before).find_first_of(';');
-        if(c)
+        if(c||c==(ph->before).npos)
         {
             string d=(ph->before).substr(0,c);
             transform(d.begin(),d.end(),d.begin(),my_tolower());
@@ -111,11 +121,40 @@ void C::couper()
                 {
                     (ph->coupe).push_back((*jt).substr(0,(*jt).size()-1));
                     (ph->coupe).push_back("]");
+                }else if((*jt).find_first_of('\"')!=(*jt).npos)
+                {
+                    unsigned int i=(*jt).find_first_of('\"');
+                    ph->coupe.push_back((*jt).substr(0,i));
+                    for(;i<(*jt).size();)
+                    {
+                        unsigned int j=(*jt).find_first_of('\"',i+1);
+                        if((*jt)[i]=='\"')
+                        {
+                            i++;
+                            while(i!=(*jt).size()&&(*jt)[i]!='\"')
+                            {
+                                 ph->coupe.push_back(string(1,(*jt)[i]));
+                                 i++;
+                            }
+                        }else
+                            ph->coupe.push_back((*jt).substr(i,j));
+                    }
                 }else
                     (ph->coupe).push_back(*jt);
                 tmp+=(*jt).size()+1;
             }
+        }else if(ph!=_phrases)
+        {
+            ph2->next=ph->next;
+            delete ph;
+            ph=ph2;
+        }else
+        {
+            _phrases=ph->next;
+            delete ph;
+            ph=_phrases;
         }
+        ph2=ph;
     }
 }
 
@@ -125,12 +164,20 @@ void C::labels()
     int i=0;
     while(tmp!=0)
     {
-        if((tmp->coupe[0]).substr(0,1)==":"||(tmp->coupe[0]).substr(0,1)==".")
+        if(tmp->coupe[0]=="dat")
+        {
+            for(vector<string>::iterator it=tmp->coupe.begin()+2;it!=tmp->coupe.end();++it)
+            {
+                tmp->hex.push_back(nombre(*it));
+                tmp->nbmots++;
+            }
+            tmp->dat=true;
+        }else if((tmp->coupe[0]).substr(0,1)==":"||(tmp->coupe[0]).substr(0,1)==".")
         {
             tmp->islabel=true;
             tmp->label=tmp->coupe[0];
             _map_labels[(tmp->coupe[0]).substr(1,(tmp->coupe[0]).size())]=i;
-            if(tmp->coupe[1]=="dat")
+            if(tmp->coupe.size()>3&&tmp->coupe[1]=="dat")
                 for(vector<string>::iterator it=tmp->coupe.begin()+2;it!=tmp->coupe.end();++it)
                 {
                     tmp->hex.push_back(nombre(*it));
@@ -153,7 +200,8 @@ void C::labels()
                     b+=2;
                 if(tmp->coupe[b]=="["&&(!maps::_map_regs.count(tmp->coupe[b+1])||tmp->coupe[b+2]=="+"))
                     tmp->nbmots++;
-                else if(!maps::_map_regs.count(tmp->coupe[b])&&(nombre(tmp->coupe[b])>30||nombre(tmp->coupe[b])<0))
+                else if(!maps::_map_regs.count(tmp->coupe[b])&&(nombre(tmp->coupe[b])>30||nombre(tmp->coupe[b])<0)
+                        &&(_map_labels.count(tmp->coupe[b])&&getlabel(_map_labels[tmp->coupe[b]])>30))
                     tmp->nbmots++;
             }
 
@@ -435,4 +483,73 @@ void C::ecrireF(const string &a)
 {
     ofstream file(a.c_str());
     file<<_codeH;
+}
+
+string C::compilation(const string &a)
+{
+    _codeH.clear();
+    while(_phrases!=0)
+    {
+        sentence *tmp=_phrases->next;
+        delete _phrases;
+        _phrases=tmp;
+    }
+    int i=0;
+    while(a.find('\n',i)!=a.npos)
+    {
+        string tmp;
+        int j;
+        for(j=i;(unsigned int)j<a.find('\n',i);j++)
+            tmp.push_back(a[j]);
+        i=j+1;
+        if(tmp.empty())
+            continue;
+        if(!_phrases)
+        {
+            _phrases=new struct sentence;
+            _phrases->before=tmp;
+            _phrases->next=0;
+            _phrases->nbmots=0;
+            _phrases->dat=false;
+        }else
+        {
+            sentence *tmp2=_phrases;
+            while(tmp2->next!=0)
+                tmp2=tmp2->next;
+            sentence* b=new struct sentence;
+            b->before=tmp;
+            b->next=0;
+            b->nbmots=0;
+            b->dat=false;
+            tmp2->next=b;
+        }
+    }
+    couper(); //on decoupe les phrases en mots
+    labels();
+    compiler();//on compile
+    recoller(); //on regoupe tout
+    return _codeH;
+}
+
+void C::deplaceLabels()
+{
+    sentence *tmp=_phrases;
+    while(tmp)
+    {
+        if(!tmp->dat)
+        {
+            if(!tmp->islabel&&tmp->nbmots>2)
+            {
+               if(_map_labels.count(tmp->coupe[2]))
+                   if(getlabel(_map_labels[tmp->coupe[2]])<30||
+                          getlabel(_map_labels[tmp->coupe[2]])<31)
+                        tmp->nbmots--;
+            }else if(!tmp->islabel&&tmp->nbmots>1)
+            {
+                1;
+            }
+        }
+        tmp=tmp->next;
+
+    }
 }

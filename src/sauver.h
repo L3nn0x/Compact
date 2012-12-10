@@ -16,10 +16,10 @@ class Sauver : public QDialog
     
 public:
     explicit Sauver(QWidget *parent = 0);
-    Sauver(QList<QListWidgetItem*>,QCloseEvent *sig,QWidget *parent=0);
+    Sauver(QList<QListWidgetItem*>,bool,QWidget *parent=0);
     ~Sauver();
 
-    QCloseEvent* Get_signal()const{return signal;}
+    bool Get_signal()const{return signal;}
 
 public slots:
     void on_buttonBox_clicked(QAbstractButton*);
@@ -31,7 +31,7 @@ signals:
 private:
     Ui::Sauver *ui;
 
-    QCloseEvent* signal;
+    bool signal;
 };
 
 #endif // SAUVER_H

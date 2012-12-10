@@ -32,8 +32,7 @@ class MyHighlight : public QSyntaxHighlighter
 
         private:
             enum State{
-                NormalState=-1,
-                LabelState=1
+                NormalState=-1
             };
 
             QTextCharFormat m_formats[LastConstruct + 1];
