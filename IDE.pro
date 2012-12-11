@@ -5,8 +5,10 @@
 #-------------------------------------------------
 
 # Configurations diverses
-CONFIG *= warn_on               # Le compilateur génère un max de warning
-CONFIG *= debug                 # App plus lourde, infos de débug. À modifier en
+win32 {
+CONFIG *= console               # Le compilateur génère un max de warning
+}
+CONFIG *= warn_on debug         # App plus lourde, infos de débug. À modifier en
                                 # release, ou qmake -config release
 TARGET = "Compact"              # Nom de l'app
 VERSION = 0.0.1
