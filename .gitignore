@@ -7,10 +7,10 @@ tmp/
 Makefile
 
 # Fichiers personnels de configuration de Creator
-*.user
+*.user.*
 
 # Dossier pouvant contenir un projet DASM pour tester l'IDE
-test
+test/
 
 
 ############
