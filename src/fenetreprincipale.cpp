@@ -41,6 +41,7 @@ void FenetrePrincipale::NouveauP(bool a)
     item->setFlags(item->flags()&~Qt::ItemIsEditable); //pour enlever l'édition du texte
 
     Projet* nouvP=new Projet(projet->Get_rep(),projet->Get_projet(),projet->Get_fin(),item);
+    nouvP->Set_tabulation(projet->Get_tabulation());
     projets.push_back(nouvP);
     projetPrinc=nouvP;
     Editeur *editor=new Editeur(projet->Get_fichier()+projet->Get_fin(),projetPrinc->Get_dossier(),nouvP);
@@ -83,6 +84,7 @@ void FenetrePrincipale::NouveauF(bool a)
     }else if(a)
     {
         Editeur *e=new Editeur(fichier->Get_fichier()+fichier->Get_fin(),fichier->Get_dossier(),0);
+        e->setTabStopWidth(fichier->Get_tabulation());
         QMdiSubWindow* c=ui->mdiArea->addSubWindow(e,Qt::Tool);
         c->setWindowTitle(fichier->Get_fichier()+fichier->Get_fin());
         c->setVisible(true);
@@ -112,6 +114,7 @@ void FenetrePrincipale::on_actionOuvrir_triggered()
             }
         }
         Editeur *e=new Editeur(b,0);
+        e->setHigh();
         QMdiSubWindow* f=ui->mdiArea->addSubWindow(e,Qt::Tool);
         f->setWindowTitle(c);
         f->setVisible(true);

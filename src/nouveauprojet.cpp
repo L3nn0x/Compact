@@ -34,6 +34,13 @@ void NouveauProjet::on_toolButton_clicked()
 }
 
 QString NouveauProjet::Get_projet()const {return ui->projet_nom->text();}
-QString NouveauProjet::Get_fichier()const {return ui->fichier_nom->text();}
+QString NouveauProjet::Get_fichier()const
+{
+    return ui->fichier_nom->text().left(ui->fichier_nom->text().indexOf("."));
+}
 QString NouveauProjet::Get_fin()const {return ui->fin_nom->currentText();}
 QString NouveauProjet::Get_rep()const {return ui->Chemin->text();}
+int NouveauProjet::Get_tabulation()const
+{
+    return ui->tabulations->currentText().toInt()*3;
+}

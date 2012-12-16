@@ -21,6 +21,7 @@ public:
 
     QString Get_fin()const;
     QString Get_dossier()const;
+    int Get_tabulation()const;
 
 private slots:
     void accept();
@@ -32,8 +33,8 @@ signals:
     void Get_ok(bool);
     
 private:
-    Ui::NouveauFichier *ui;
     bool m_shadow;
+    Ui::NouveauFichier *ui;
 };
 
 #endif // NOUVEAUFICHIER_H

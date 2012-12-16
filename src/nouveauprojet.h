@@ -19,6 +19,7 @@ public:
 
     QString Get_projet()const;
     QString Get_fichier()const;
+    int Get_tabulation()const;
     QString Get_fin()const;
     QString Get_rep()const;
 

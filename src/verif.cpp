@@ -2,8 +2,15 @@
 
 using namespace std;
 
-verif::verif(vector<string> &a,QMap<string,string> &e):_code(a),_map_conf(e)
-{}
+verif::verif(struct sentence *a):ok(false)
+{
+    while(a!=0)
+    {
+        for(vector<string>::iterator it=a->coupe.begin();it!=a->coupe.end();++it)
+            _code.push_back(*it);
+        a=a->next;
+    }
+}
 
 bool verif::verification()
 {

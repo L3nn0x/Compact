@@ -4,7 +4,6 @@
 NouveauFichier::NouveauFichier(QWidget *parent,bool shadow) :
     QDialog(parent),m_shadow(shadow),
     ui(new Ui::NouveauFichier)
-    /* warning: field 'm_shadow' will be initialized after field 'ui' [-Wreorder] */
 {
     ui->setupUi(this);
     if(shadow)
@@ -18,7 +17,10 @@ NouveauFichier::~NouveauFichier()
     delete ui;
 }
 
-QString NouveauFichier::Get_fichier()const{return ui->nom_fichier->text();}
+QString NouveauFichier::Get_fichier()const
+{
+    return ui->nom_fichier->text().left(ui->nom_fichier->text().indexOf("."));
+}
 
 void NouveauFichier::accept()
 {
@@ -47,4 +49,9 @@ void NouveauFichier::on_toolButton_clicked()
                                                           tr("Choisissez un dossier"),"/home",
                                                           QFileDialog::ShowDirsOnly
                                                           | QFileDialog::DontResolveSymlinks)+QDir::toNativeSeparators("/"));
+}
+
+int NouveauFichier::Get_tabulation()const
+{
+    return ui->tabulations->currentText().toInt()*3;
 }

@@ -1,12 +1,13 @@
 #include "projet.h"
 
 Projet::Projet(QString rep,QString nom,QString fin,QStandardItem *item)
-    :dossier(rep),name(nom),fin_fichier(fin),item(item),ok(true),compilo(new C)
+    :dossier(rep),name(nom),fin_fichier(fin),item(item),ok(true),Ltab(40),compilo(new C)
 {}
 
 QStandardItem* Projet::addFichier(Editeur* a,bool open)
 {
     a->setHigh();
+    a->setTabStopWidth(Ltab);
     fichiers.push_back(a);
     QStandardItem *h=new QStandardItem(a->Get_nom());
     h->setFlags(h->flags()&~Qt::ItemIsEditable);
@@ -28,7 +29,7 @@ QStandardItem* Projet::addFichier(Editeur* a,bool open)
         if(!file.open(QIODevice::WriteOnly|QIODevice::Append))
             return item;
         QTextStream b(&file);
-        b<<name<<endl<<fin_fichier<<endl<<a->Get_nom()<<endl;
+        b<<name<<endl<<fin_fichier<<endl<<Ltab<<endl<<a->Get_nom()<<endl;
         file.close();
         return item;
     }
@@ -44,7 +45,7 @@ Projet::~Projet()
     item=0;
 }
 
-Projet::Projet(QString &a, QStandardItem *b,QMainWindow *z):item(b),ok(false),compilo(new C)
+Projet::Projet(QString &a, QStandardItem *b,QMainWindow *z):item(b),ok(false),Ltab(40),compilo(new C)
 {
     dossier=a;
     int i=0;
@@ -86,6 +87,17 @@ Projet::Projet(QString &a, QStandardItem *b,QMainWindow *z):item(b),ok(false),co
     }
     fin_fichier=QString(buff).remove(QChar('\n'),Qt::CaseInsensitive);
     fin_fichier.remove(QChar('\r'),Qt::CaseInsensitive);
+    l=c.readLine(buff,1024*sizeof(char));
+    if(l==-1)
+    {
+        c.close();
+        delete[] buff;
+        return;
+    }
+    {
+        QString tmp(buff);
+        Ltab=tmp.toInt();
+    }
 
     while(!c.atEnd())
     {
@@ -100,6 +112,7 @@ Projet::Projet(QString &a, QStandardItem *b,QMainWindow *z):item(b),ok(false),co
         tmp.remove(QChar('\n'),Qt::CaseInsensitive);
         tmp.remove(QChar('\r'),Qt::CaseInsensitive);
         Editeur* editor=new Editeur(dossier+tmp,this);
+        editor->setTabStopWidth(Ltab);
         QObject::connect(editor,SIGNAL(Fermer(Editeur*)),z,SLOT(close_sub_win(Editeur*)));
         QObject::connect(editor,SIGNAL(Change(QString,bool)),z,SLOT(toggle_asterix(QString,bool)));
         addFichier(editor,true);
@@ -111,7 +124,7 @@ Projet::Projet(QString &a, QStandardItem *b,QMainWindow *z):item(b),ok(false),co
 
 Editeur* Projet::getFichier(QStandardItem *a)
 {
-    for(QList<Editeur*>::iterator it=fichiers.begin();it!=fichiers.end();++it)
+    for(QList<Editeur*>::const_iterator it=fichiers.begin();it!=fichiers.end();++it)
         if((*it)->Get_nom()==a->text())
             return *it;
     return 0;
@@ -120,7 +133,15 @@ Editeur* Projet::getFichier(QStandardItem *a)
 QString Projet::Compiler()
 {
     QString tmp;
-    for(QList<Editeur*>::iterator it=fichiers.begin();it!=fichiers.end();++it)
+    for(QList<Editeur*>::const_iterator it=fichiers.begin();it!=fichiers.end();++it)
         tmp+=(*it)->toPlainText()+"\n";
     return QString::fromStdString(compilo->compilation(tmp.toStdString()));
+}
+
+QMap<QString, int> Projet::Get_labels()const
+{
+    QMap<QString,int> a;
+    for(QMap<std::string,int>::const_iterator it=compilo->_map_labels.begin();it!=compilo->_map_labels.end();++it)
+        a.insert(QString::fromStdString(it.key()),it.value());
+    return a;
 }

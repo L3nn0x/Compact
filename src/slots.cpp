@@ -94,7 +94,7 @@ void FenetrePrincipale::Modifyfont()
 
 void FenetrePrincipale::ChangerTitre(QMdiSubWindow *a)
 {
-    setWindowTitle(a?a->windowTitle()+" - Compact":"IDE Compact");
+    setWindowTitle((a&&!a->isFullScreen())?a->windowTitle()+" - Compact":"IDE Compact");
 }
 
 void FenetrePrincipale::toggle_asterix(QString a,bool b)
@@ -156,14 +156,12 @@ void FenetrePrincipale::on_actionTout_enregistrer_triggered()
 
 void FenetrePrincipale::closeEvent(QCloseEvent *b)
 {
-    if(end)
+    if(end||!ui->listWidget->findItems("*",Qt::MatchContains).count())
     {
         b->accept();
         return;
     }
     QList<QListWidgetItem*> a=ui->listWidget->findItems("*",Qt::MatchContains);
-    if(!a.count())
-        return;
     sauver=new Sauver(a,true,this);
     sauver->show();
     QObject::connect(sauver,SIGNAL(ok(int)),this,SLOT(Sauver_return(int)));
@@ -184,21 +182,15 @@ void FenetrePrincipale::Sauver_return(int b)
     }
     QList<QMdiSubWindow*> z=ui->mdiArea->subWindowList();
     for(QList<QMdiSubWindow*>::iterator it=z.begin();it!=z.end();++it)
-    {
-        (*it)->setWindowTitle((*it)->windowTitle().remove(QChar('*')));
         ((Editeur*)(*it)->widget())->sauvegarder();
-    }
     if(x)
     {
         this->close();
         return;
     }
-    QList<QListWidgetItem*> a=ui->listWidget->findItems("*",Qt::MatchContains);
-    for(QList<QListWidgetItem*>::iterator it=a.begin();it!=a.end();++it)
-        (*it)->setText((*it)->text().remove(QChar('*')));
 }
 
-void FenetrePrincipale::customContextMenu(QPoint a) /* warning: unused parameter 'a' */
+void FenetrePrincipale::customContextMenu(QPoint a)
 {
     QMenu* menu=new QMenu();
     menu->addAction(tr("Ajouter fichier(s)"),this,SLOT(AjouterFichier()));
@@ -226,6 +218,28 @@ void FenetrePrincipale::Fermerprojet(int sender)
 
 void FenetrePrincipale::on_actionCompiler_triggered()
 {
-    if(projetPrinc)
-        QMessageBox::information(this,"compilation",projetPrinc->Compiler());
+    //on_actionTout_enregistrer_triggered();
+    if(!projetPrinc)
+    {
+        QMessageBox::critical(this,tr("Erreur de compilation"),tr("Impossible de trouver le projet principal."));
+        return;
+    }
+    QString hexa=projetPrinc->Compiler();
+    bool ok=projetPrinc->compi_ok();
+    QMap<QString,int> labels=projetPrinc->Get_labels();
+    if(!ok)
+    {
+        ui->sortieCompilation->setTextFormat(Qt::RichText);
+        ui->sortieCompilation->setText(tr("<font color=\"red\">La compilation a échouée.</font>"));
+        return;
+    }
+    ui->sortieCompilation->setText(tr("La compilation a réussi !"));
+    ui->liste_labels->clear();
+    for(QMap<QString,int>::const_iterator it=labels.begin();it!=labels.end();++it)
+    {
+        QString tmp2;
+        tmp2.setNum(it.value());
+        QString tmp=it.key()+"\t"+tmp2;
+        ui->liste_labels->addItem(tmp);
+    }
 }

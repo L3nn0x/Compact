@@ -24,8 +24,13 @@ public:
     bool Get_ok()const{return ok;}
     QString Get_dossier()const{return dossier;}
     QString Get_name()const{return name;}
+    int Get_tabulation()const{return Ltab;}
+    void Set_tabulation(int a){Ltab=a;}
 
     QString Compiler();
+    QMap<QString,int> Get_labels()const;
+    bool compi_ok()const{return compilo->Get_result();}
+
 
 protected:
     QString dossier;
@@ -34,6 +39,7 @@ protected:
     QString fin_fichier;
     QStandardItem* item;
     bool ok;
+    int Ltab;
 
     C* compilo;
 };

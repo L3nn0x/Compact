@@ -12,7 +12,7 @@ C::~C()
     }
 }
 
-C::C(string a):_phrases(0)
+C::C(string a):ok(false),_phrases(0)
 {
     if(a=="no file")
         return;
@@ -23,8 +23,8 @@ C::C(string a):_phrases(0)
     while(getline(file,tmp))
     {
         c_tok tok(tmp,boost::char_separator<char>(" "));
-        c_tok::iterator it2=tok.begin();
-        for(c_tok::iterator it=tok.begin();it!=tok.end();++it)
+        c_tok::const_iterator it2=tok.begin();
+        for(c_tok::const_iterator it=tok.begin();it!=tok.end();++it)
             _map_conf[*it2]=*it;
             ++it2;
     }
@@ -33,6 +33,7 @@ C::C(string a):_phrases(0)
 void C::compilation(const string &a,const string &b)
 {
     _codeH.clear();
+    _map_labels.clear();
     while(_phrases!=0)
     {
         sentence *tmp=_phrases->next;
@@ -41,18 +42,16 @@ void C::compilation(const string &a,const string &b)
     }
     lectureF(a); //on lit le fichier d'entree
     couper(); //on decoupe les phrases en mots
-    /*verif test(_coupe,maps::_map_normal,maps::_map_special,maps::_map_regs,_map_conf); //on verifie la syntaxe
-    if(test.verification())
-        cout<<"code OK";
-    else
+    verif test(_phrases); //on verifie la syntaxe
+    if(!test.verification())
     {
-        cout<<"erreur code !"<<endl;
-        vector<string> a=test.correction(); //on tente une correction automatique
-        for(unsigned int i=0;i<a.size();++i)
-            cout<<a[i]<<" ";
+        ok=false;
         return;
-    }*/
+    }
+    else
+        ok=true;
     labels();
+    deplaceLabels();
     compiler();//on compile
     recoller(); //on regoupe tout
     ecrireF(b); //on ecrit la sortie
@@ -100,7 +99,7 @@ void C::couper()
             while(d[tmp]==' '||d[tmp]=='\t')
                 tmp++;
             c_tok tok2(d,boost::char_separator<char>(" ,\t+-"));
-            for(c_tok::iterator jt=tok2.begin();jt!=tok2.end();++jt)
+            for(c_tok::const_iterator jt=tok2.begin();jt!=tok2.end();++jt)
             {
                 if((*jt)[0]=='[')
                 {
@@ -470,7 +469,7 @@ void C::recoller()
     ostringstream oss;
     for(struct sentence* a=_phrases;a!=0;a=a->next)
     {
-        for(vector<int>::iterator it=a->hex.begin();it!=a->hex.end();++it)
+        for(vector<int>::const_iterator it=a->hex.begin();it!=a->hex.end();++it)
         {
             oss<<hex<<*it;
             oss<<" ";
@@ -488,6 +487,7 @@ void C::ecrireF(const string &a)
 string C::compilation(const string &a)
 {
     _codeH.clear();
+    _map_labels.clear();
     while(_phrases!=0)
     {
         sentence *tmp=_phrases->next;
@@ -525,7 +525,16 @@ string C::compilation(const string &a)
         }
     }
     couper(); //on decoupe les phrases en mots
+    verif test(_phrases); //on verifie la syntaxe
+    if(!test.verification())
+    {
+        ok=false;
+        return "";
+    }
+    else
+        ok=true;
     labels();
+    deplaceLabels();
     compiler();//on compile
     recoller(); //on regoupe tout
     return _codeH;
@@ -546,7 +555,10 @@ void C::deplaceLabels()
                         tmp->nbmots--;
             }else if(!tmp->islabel&&tmp->nbmots>1)
             {
-                1;  /* WTF */
+                if(_map_labels.count(tmp->coupe[1]))
+                    if(getlabel(_map_labels[tmp->coupe[2]])<30||
+                            getlabel(_map_labels[tmp->coupe[1]])<31)
+                        tmp->nbmots--;
             }
         }
         tmp=tmp->next;

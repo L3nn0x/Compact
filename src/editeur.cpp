@@ -5,7 +5,7 @@ Editeur::Editeur(QString name,void* proj,QWidget *parent) :
 {
     setUndoRedoEnabled(true);
     int i=0;
-    for(QString::iterator it=nom.end();it!=nom.begin();--it)
+    for(QString::const_iterator it=nom.end();it!=nom.begin();--it)
     {
         i++;
         if(*it=='/'||*it=='\\')

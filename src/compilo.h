@@ -18,17 +18,6 @@ struct my_tolower
     }
 };
 
-struct sentence{
-int nbmots; //nombre de mots en hexa
-bool islabel; //la ligne est un label
-bool dat; //la ligne est un dat
-std::string before; //la ligne non coupee
-std::vector<std::string> coupe; //la ligne coupee
-std::vector<int> hex; //la traduction hexa de la ligne
-std::string label; //le label de la ligne
-sentence *next; //la prochaine ligne
-};
-
 //juste par flemme de tout reecrire
 typedef boost::tokenizer<boost::char_separator<char> > c_tok;
 
@@ -61,11 +50,15 @@ class C
         //ecrire dans un fichier le resultat
         void ecrireF(const std::string&);
 
+        bool Get_result()const{return ok;}
+
         std::string _codeH;
         QMap<std::string,int> _map_labels;
 
     protected:
         QMap<std::string,std::string> _map_conf;
+
+        bool ok;
 
     private:
         struct sentence* _phrases;
