@@ -4,6 +4,7 @@
 NouveauFichier::NouveauFichier(QWidget *parent,bool shadow) :
     QDialog(parent),m_shadow(shadow),
     ui(new Ui::NouveauFichier)
+    /* warning: field 'm_shadow' will be initialized after field 'ui' [-Wreorder] */
 {
     ui->setupUi(this);
     if(shadow)

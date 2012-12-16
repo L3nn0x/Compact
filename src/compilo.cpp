@@ -546,7 +546,7 @@ void C::deplaceLabels()
                         tmp->nbmots--;
             }else if(!tmp->islabel&&tmp->nbmots>1)
             {
-                1;
+                1;  /* WTF */
             }
         }
         tmp=tmp->next;

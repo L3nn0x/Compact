@@ -198,7 +198,7 @@ void FenetrePrincipale::Sauver_return(int b)
         (*it)->setText((*it)->text().remove(QChar('*')));
 }
 
-void FenetrePrincipale::customContextMenu(QPoint a)
+void FenetrePrincipale::customContextMenu(QPoint a) /* warning: unused parameter 'a' */
 {
     QMenu* menu=new QMenu();
     menu->addAction(tr("Ajouter fichier(s)"),this,SLOT(AjouterFichier()));
