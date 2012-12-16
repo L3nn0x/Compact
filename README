@@ -20,7 +20,10 @@ autre nom similaire.
 'wget https://github.com/FaerieFrOSt/Compact/archive/master.zip'
 
 4) Déplacez vous dans le dossier contenant les sources et exécutez
-'qmake && make'
+'qmake && -j'
+(l'option '-j' permet de compiler les fichiers en parallèle, et non
+les uns après les autres. Chez moi, on passe de 28s à 7s de
+compilation ^^)
 
 5) Si tout se passe bien, le binaire du projet est dans le dossier
 bin/
@@ -32,6 +35,8 @@ bin/
 *
 *********************************
 
-Vous avez dans la section downloads un .zip qui contient tout ce dont vous avez besoin pour lancer le programme.
+Vous avez dans la section downloads un .zip qui contient tout ce dont
+vous avez besoin pour lancer le programme.
 
-Si vous voulez vraiment compiler, ouvrez le .pro sous Qt creator et lancez la conpilation tout simplement.
+Si vous voulez vraiment compiler, ouvrez le .pro sous Qt creator et
+lancez la conpilation tout simplement.
