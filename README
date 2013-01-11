@@ -20,10 +20,9 @@ autre nom similaire.
 'wget https://github.com/FaerieFrOSt/Compact/archive/master.zip'
 
 4) Déplacez vous dans le dossier contenant les sources et exécutez
-'qmake && -j'
-(l'option '-j' permet de compiler les fichiers en parallèle, et non
-les uns après les autres. Chez moi, on passe de 28s à 7s de
-compilation ^^)
+'qmake && make -jx', avec x le nombre de coeurs de votre
+processeur. Par exemple, mon processeur a 4 coeurs, j'utilise donc la
+commande 'qmake && make -j4'. Dans le doute, utilisez 'make -j'.
 
 5) Si tout se passe bien, le binaire du projet est dans le dossier
 bin/
